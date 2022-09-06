@@ -6,6 +6,7 @@ module.exports = (robot) => {
     const { room: channelId } = res.envelope
     if (code !== process.env.HUBOT_SETUP_KEY) {
       res.send('install: invalid setup key')
+      return
     }
     robot.brain.set('mailbox-channel-id', channelId)
     res.send(channelId + ' をメールボックスに設定しました')
