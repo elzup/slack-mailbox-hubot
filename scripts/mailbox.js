@@ -17,9 +17,14 @@ module.exports = (robot) => {
     const mailboxChannelId = robot.brain.get('mailbox-channel-id')
     const { room: channelId } = res.envelope
     if (mailboxChannelId === channelId) return
+    if (!mailboxChannelId) {
+      robot.messageRoom(
+        '設定エラーです。お手数ですが管理者へ連絡をお願いします。'
+      )
+    }
 
-    res.send('メッセージを受け取りました\n担当からDMが来るまでお待ち下さい')
     robot.messageRoom(mailboxChannelId, `<@${user.id}>: '${text}'`)
+    res.send('メッセージを受け取りました\n担当からDMが来るまでお待ち下さい')
 
     // res.message.user.id
   })
